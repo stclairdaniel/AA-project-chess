@@ -78,7 +78,7 @@ class Board
     king_pos = find_king(color)
 
     opponent_piece_array = color == :white ? @black_pieces : @white_pieces
-    opponent_piece_array.any? { |piece| piece.moves.include?(king_pos) }
+    opponent_piece_array.any { |piece| piece.moves.include?(king_pos) }
   end
 
   def dup
