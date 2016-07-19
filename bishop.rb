@@ -7,9 +7,9 @@ class Bishop < Piece
   attr_reader :symbol, :move_dirs, :color
 
   def initialize(color, board, pos)
-    super(color, board, pos)
+    super
+    
     @symbol = :b
-    @move_dirs = [[-1,-1], [1,1], [-1,1], [1,-1]]
+    @move_dirs = [[-1, -1], [1, 1], [-1, 1], [1, -1]]
   end
-
 end
