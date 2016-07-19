@@ -27,11 +27,11 @@ class Display
     if [i, j] == @cursor_pos
       bg = :light_red
     elsif (i + j).odd?
-      bg = :light_blue
-    else
       bg = :blue
+    else
+      bg = :light_blue
     end
-    { background: bg, color: :white }
+    { background: bg, color: @board[[i, j]].color }
   end
 
   def render

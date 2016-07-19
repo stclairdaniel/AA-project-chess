@@ -1,40 +1,91 @@
 require './board'
 require './player'
 require './bishop'
+require './rook'
 require './king'
+require './knight'
+require './queen'
+require './pawn'
+require 'time'
 
 class Game
 
-  attr_reader :player
+  attr_reader :white, :black
 
-  def initialize(player)
-    @player = player
+  def initialize(board = Board.new)
+    @board = board
+    @board.make_starting_grid
+
+    @white = Player.new(board, :white)
+    @black = Player.new(board, :black)
+
+    @current_player = @white
   end
 
+  def swap_player
+    @current_player = @current_player == @white ? @black : @white
+  end
+
+  def loser
+    [:white, :black].select { |color| @board.checkmate?(color) }[0]
+  end
+
+  def move
+    start_pos = @current_player.command
+    end_pos = @current_player.command
+
+    @board.move(start_pos, end_pos) if @board[start_pos].color == @current_player.color
+  end
+
+  def run
+    until loser
+      move
+      swap_player
+    end
+
+    puts "#{loser} loses."
+  end
+
+  def rand_move
+    pieces = @current_player.color == :white ? @board.white_pieces : @board.black_pieces
+    moves = pieces.each_with_object({}) do |piece, hash|
+      piece_moves = piece.valid_moves
+      hash[piece.pos] = piece_moves unless piece_moves.empty?
+    end
+
+    start_pos = moves.keys.sample
+    end_pos = moves[start_pos].sample
+
+    @board.move(start_pos, end_pos)
+  end
+
+  def rand_run
+    # start = Time.now
+    until loser # || Time.now - start > 10
+      @current_player.display.render
+      rand_move
+      sleep(0.5)
+      swap_player
+    end
+    @current_player.display.render
+    puts "#{loser} loses."
+    loser
+  end
 end
 
-board = Board.new
-player = Player.new(board)
-game = Game.new(player)
-white_bishop = Bishop.new(:white, board, [2,2])
-board[[2,2]] = white_bishop
+game = Game.new()
+game.rand_run()
 
-black_bishop = Bishop.new(:black, board, [4,4])
-board[[4,4]] = black_bishop
 
-white_king = King.new(:white, board, [3,3])
-board[[3,3]] = white_king
+# results = []
+# times = []
+# 10.times do
+#   start = Time.now
+#   game = Game.new
+#   results << game.rand_run
+#   times << Time.now - start
+# end
+# p results
+# p times
 
-black_king = King.new(:black, board, [6,6])
-board[[6,6]] = black_king
-
-board.white_pieces = [white_bishop, white_king]
-board.black_pieces = [black_bishop, black_king]
-
-#
-# p board.in_check?(:white)
-# p board.in_check?(:black)
-
-n = board.dup
-p n
-#game.player.move
+# game.player.move
