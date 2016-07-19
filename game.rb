@@ -6,7 +6,6 @@ require './king'
 require './knight'
 require './queen'
 require './pawn'
-require 'time'
 
 class Game
 
@@ -40,6 +39,8 @@ class Game
   def run
     until loser
       move
+      p loser
+      sleep(1)
       swap_player
     end
 
@@ -60,32 +61,23 @@ class Game
   end
 
   def rand_run
-    # start = Time.now
-    until loser # || Time.now - start > 10
+    turns = 0
+    until loser || turns > 100
       @current_player.display.render
       rand_move
-      sleep(0.5)
       swap_player
+
+      turns += 1
+
+      sleep(0.5)
     end
+
     @current_player.display.render
     puts "#{loser} loses."
+
     loser
   end
 end
 
 game = Game.new()
-game.rand_run()
-
-
-# results = []
-# times = []
-# 10.times do
-#   start = Time.now
-#   game = Game.new
-#   results << game.rand_run
-#   times << Time.now - start
-# end
-# p results
-# p times
-
-# game.player.move
+game.run()
