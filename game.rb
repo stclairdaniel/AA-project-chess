@@ -40,6 +40,7 @@ class Game
 
   def run
     until loser
+<<<<<<< HEAD
       begin
         move
       rescue => e
@@ -47,6 +48,9 @@ class Game
         sleep(1)
         retry
       end
+=======
+      move
+>>>>>>> e6a2674d711e1c25287f2813a067f0a7e1875f63
       swap_player
     end
 
@@ -108,5 +112,10 @@ class Game
   end
 end
 
+<<<<<<< HEAD
 game = Game.new
 game.run
+=======
+game = Game.new()
+game.rand_run()
+>>>>>>> e6a2674d711e1c25287f2813a067f0a7e1875f63
