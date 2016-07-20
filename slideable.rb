@@ -19,9 +19,8 @@ module Slideable
         #add move and then break if opponent's color - captured!
         break if @board[[new_row, new_col]].color == @opponent_color
       end
-
     end
-    
+
     all_moves
   end
 end

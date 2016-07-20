@@ -7,12 +7,12 @@ class Knight < Piece
   attr_reader :symbol, :move_dirs, :color
 
   def initialize(color, board, pos)
-    super(color, board, pos)
+    super
+
     @symbol = :k
     @move_dirs = [
       [1, 2], [1, -2], [2, 1], [2, -1],
       [-1, -2], [-1, 2], [-2, 1], [-2, -1]
     ]
   end
-
 end
