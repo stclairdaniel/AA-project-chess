@@ -67,8 +67,8 @@ class Board
 
   def find_king(color)
     pieces = @black_pieces + @white_pieces
-    king = pieces.find{ |piece| piece.color == color && piece.symbol == :K }
 
+    king = pieces.find { |piece| piece.color == color && piece.symbol == :K }
     king.pos
   end
 

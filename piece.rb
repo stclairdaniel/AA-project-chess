@@ -19,7 +19,13 @@ class Piece
 
   def move_into_check?(end_pos)
     temp_board = @board.dup
-    temp_board[@pos], temp_board[end_pos] = NullPiece.instance, temp_board[@pos]
+
+    piece = temp_board[@pos]
+
+    piece.pos = end_pos
+
+    temp_board[end_pos] = temp_board[@pos]
+    temp_board[@pos] = NullPiece.instance
 
     temp_board.in_check?(@color)
   end

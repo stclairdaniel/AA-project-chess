@@ -39,8 +39,6 @@ class Game
   def run
     until loser
       move
-      p loser
-      sleep(1)
       swap_player
     end
 
