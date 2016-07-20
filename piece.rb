@@ -12,9 +12,10 @@ class Piece
 
   def initialize(color, board, pos)
     @color = color
-    @opponent_color = @color == :white ? :black : :white
     @board = board
     @pos = pos
+
+    @opponent_color = @color == :white ? :black : :white
   end
 
   def move_into_check?(end_pos)

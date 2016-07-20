@@ -1,7 +1,6 @@
 require 'singleton'
 
 class NullPiece
-
   include Singleton
 
   def to_s
@@ -11,9 +10,4 @@ class NullPiece
   def color
     nil
   end
-
-  def dup
-    NullPiece.instance
-  end
-
 end

@@ -11,11 +11,13 @@ class Player
 
   def command
     result = nil
+
     until result
       @display.render
       puts "It is #{@color}'s turn."
       result = @display.get_input
     end
+
     result
   end
 end

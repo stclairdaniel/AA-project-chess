@@ -26,14 +26,16 @@ class Game
   end
 
   def loser
-    [:white, :black].select { |color| @board.checkmate?(color) }[0]
+    [:white, :black].find { |color| @board.checkmate?(color) }
   end
 
   def move
     start_pos = @current_player.command
     end_pos = @current_player.command
 
-    @board.move(start_pos, end_pos) if @board[start_pos].color == @current_player.color
+    if @board[start_pos].color == @current_player.color
+      @board.move(start_pos, end_pos)
+    end
   end
 
   def run
@@ -46,10 +48,22 @@ class Game
   end
 
   def rand_move
-    pieces = @current_player.color == :white ? @board.white_pieces : @board.black_pieces
-    moves = pieces.each_with_object({}) do |piece, hash|
+    @current_player.display.render
+
+    player_pieces =
+      if @current_player.color == :white
+        @board.white_pieces
+      else
+        @board.black_pieces
+      end
+
+    #keys are start_pos, values are end_pos's
+    moves = Hash.new
+
+    player_pieces.each do |piece|
       piece_moves = piece.valid_moves
-      hash[piece.pos] = piece_moves unless piece_moves.empty?
+
+      moves[piece.pos] = piece_moves unless piece_moves.empty?
     end
 
     start_pos = moves.keys.sample
@@ -60,14 +74,13 @@ class Game
 
   def rand_run
     turns = 0
-    until loser || turns > 100
-      @current_player.display.render
+    until loser || turns > 500
       rand_move
       swap_player
 
       turns += 1
 
-      sleep(0.5)
+      sleep(0.1)
     end
 
     @current_player.display.render

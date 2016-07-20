@@ -9,7 +9,10 @@ class Knight < Piece
   def initialize(color, board, pos)
     super(color, board, pos)
     @symbol = :k
-    @move_dirs = [[1,2], [1,-2], [2,1], [2,-1], [-1,-2], [-1,2], [-2,1], [-2,-1]]
+    @move_dirs = [
+      [1, 2], [1, -2], [2, 1], [2, -1],
+      [-1, -2], [-1, 2], [-2, 1], [-2, -1]
+    ]
   end
 
 end
