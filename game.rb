@@ -57,7 +57,7 @@ class Game
         @board.black_pieces
       end
 
-    #keys are start_pos, values are end_pos's
+    #keys are piece_pos, values are piece_moves's
     moves = Hash.new
 
     player_pieces.each do |piece|
@@ -65,6 +65,18 @@ class Game
 
       moves[piece.pos] = piece_moves unless piece_moves.empty?
     end
+
+    captures = {}
+    moves.each do |piece_pos, piece_moves|
+
+      piece_captures = piece_moves.select do |move|
+        @board[move].color == @current_player.opponent_color
+      end
+
+      captures[piece_pos] = piece_captures unless piece_captures.empty?
+    end
+
+    moves = captures unless captures.empty?
 
     start_pos = moves.keys.sample
     end_pos = moves[start_pos].sample
@@ -91,4 +103,4 @@ class Game
 end
 
 game = Game.new()
-game.run()
+game.rand_run()
